@@ -1,0 +1,50 @@
+{% load static %}
+{% include "base.html" %}
+<div align="center">
+    <div class="alert alert-success">
+      {{message}}
+    </div>
+    <input type="button" class="btn" value="New" onclick="showForm();" id="show-hide" style="widht: 100px;"> <br/><br/>
+
+    <div id="new-form" style="display: none;">
+        <form method="post" action="/appointments/home/">{% csrf_token %}
+            DATE: <input type="date" name="date" id="date"/> <br/>
+            TIME: <input type="time" name="time" id="time"/> <br/>
+            DESC: <input type="text" name="description" id="description"/> <br/>
+
+            <input type="submit" value="Save" class="btn btn-success"/>
+            <input type="reset" value="Clear" class="btn" />
+        </form>
+
+    </div>
+
+    <input type="text" id="search_box" /> <input type="button" class="btn btn-primary" id="search_button" onclick="getAppointments();" value="Search" /> <br/>
+
+    <script type="text/javascript">
+
+
+    </script>
+
+    <div id="search-results">
+        {% if data %}
+            <table border="1">
+                <tr>
+                    <td>DATE</td> <td>TIME</td><td>Description</td>
+                </tr>
+                {% for item in data %}
+                <tr>
+                    <td>{{item.DATE}}</td><td>{{item.TIME}}</td><td>{{item.description}}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+        {% else %}
+            No appointments are there.
+        {% endif %}
+    </div>
+
+
+</div>
+
